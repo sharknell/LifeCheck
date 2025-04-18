@@ -1,28 +1,34 @@
 const express = require('express');
-const path = require('path');
+require('dotenv').config();
+
+const initDatabase = require('../backend/src/config/initDatabase'); // ← 이렇게 수정
+const sequelize = require('../backend/src/config/database');
+
 const app = express();
+const PORT = 5000;
 
-const port = process.env.PORT || 5000; // 포트 설정
-
-// CORS 사용
-const cors = require('cors');
-const corsOption = {
-    origin: "*",
-    optionSuccessStatus: 200,
-};
-app.use(cors(corsOption));
 app.use(express.json());
 
-// /api/tests 경로로 접속하면 아래 작업 후 데이터 전송해줌
-app.get('/api/tests', async (req, res) => {
-    res.send({al:'Hi'});
+app.get('/', (req, res) => {
+  res.send('🚀 LifeTracker API Server is running!');
 });
 
-// 정적 파일 미들웨어 설정
-app.use(express.static(path.join(__dirname, '/build')));
+const startServer = async () => {
+  await initDatabase(); // 🆕 DB 없으면 생성
 
+  try {
+    await sequelize.authenticate();
+    console.log('✅ MySQL 연결 성공!');
 
-// 서버 확인
-app.listen(port, () => {
-    console.log('server is running on ' + port);
-});
+    // 여기에 모델 import 후 sync 가능 (아직 없으면 생략 가능)
+    await sequelize.sync(); // 🆕 테이블 자동 생성
+
+    app.listen(PORT, () => {
+      console.log(`🌐 서버 실행 중: http://localhost:${PORT}`);
+    });
+  } catch (err) {
+    console.error('❌ 서버 시작 중 오류:', err);
+  }
+};
+
+startServer();
