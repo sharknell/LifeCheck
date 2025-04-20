@@ -35,3 +35,14 @@ exports.login = async (req, res) => {
     res.status(500).json({ message: '서버 오류', error: err });
   }
 };
+exports.getMe = async (req, res) => {
+  try {
+    const user = await User.findByPk(req.user.userId, {
+      attributes: ['id', 'email', 'nickname', 'createdAt']
+    });
+
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ message: '유저 정보 불러오기 실패', error: err });
+  }
+};

@@ -16,6 +16,8 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: true
   }
+}, {
+  timestamps: true // createdAt, updatedAt 자동 생성
 });
 
 module.exports = User;
