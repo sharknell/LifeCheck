@@ -14,7 +14,9 @@
     "nodemon": "^3.1.9"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "exrpess": "^0.0.1-security",
+    "jsonwebtoken": "^9.0.2",
     "sequelize": "^6.37.7"
   }
 }

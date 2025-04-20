@@ -3,16 +3,19 @@ require('dotenv').config();
 
 const initDatabase = require('../backend/src/config/initDatabase'); // ← 이렇게 수정
 const sequelize = require('../backend/src/config/database');
-
+const User = require("./src/models/User");
+const authRoutes = require("./src/routes/authRoutes");
+const cors = require('cors');
 const app = express();
 const PORT = 5000;
 
 app.use(express.json());
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.send('🚀 LifeTracker API Server is running!');
 });
-
+app.use('/api/auth', authRoutes);
 const startServer = async () => {
   await initDatabase(); // 🆕 DB 없으면 생성
 
