@@ -4,10 +4,12 @@ export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true); // ✅ 추가
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     setIsAuthenticated(!!token);
+    setLoading(false); // ✅ 로딩 완료
   }, []);
 
   const login = (token) => {
@@ -21,8 +23,8 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
-      {children}
+    <AuthContext.Provider value={{ isAuthenticated, login, logout, loading }}>
+      {!loading && children} {/* ✅ 로딩 끝날 때만 렌더링 */}
     </AuthContext.Provider>
   );
 };

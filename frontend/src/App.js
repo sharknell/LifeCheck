@@ -4,15 +4,23 @@ import Account from './pages/Account';
 import Dashboard from './pages/Dashboard';
 import PrivateRoute from './routes/PrivateRoute';
 import AuthProvider from './context/AuthContext';
+import { ToastContainer } from 'react-toastify';
+import Header from './components/layout/Header';
+import Todos from './pages/Todos';
 
 function App() {
   return (
     <AuthProvider>
       <Router>
+      <Header />
+
         <Routes>
+        <Route path="/todos" element={<PrivateRoute><Todos /></PrivateRoute>} />
           <Route path="/account" element={<Account />} />
-          <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+        <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+        {/* */}
         </Routes>
+        <ToastContainer />
       </Router>
     </AuthProvider>
   );

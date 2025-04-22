@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import API from '../../services/api';
 
 const RegisterForm = () => {
   const [form, setForm] = useState({ email: '', password: '', nickname: '' });
