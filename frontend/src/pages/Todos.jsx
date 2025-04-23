@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import API from '../services/api';
-import TodoItem from '../components/todo/TodoItem';
 import TodoForm from '../components/todo/TodoForm';
+import TodoItem from '../components/todo/TodoItem';
+import MoodForm from '../components/mood/MoodForm';
+import MoodChart from '../components/mood/MoodChart';
 
 const Todos = () => {
   const [todos, setTodos] = useState([]);
+  const [moods, setMoods] = useState([]);
+
+  const latestMood = moods[moods.length - 1]?.mood || null;
 
   const fetchTodos = async () => {
     try {
@@ -15,7 +20,16 @@ const Todos = () => {
     }
   };
 
-  const handleAdd = async (content) => {
+  const fetchMoods = async () => {
+    try {
+      const res = await API.get('/moods');
+      setMoods(res.data);
+    } catch (err) {
+      console.error('❌ 감정 불러오기 실패', err);
+    }
+  };
+
+  const handleAddTodo = async (content) => {
     try {
       const res = await API.post('/todos', { content });
       setTodos([res.data, ...todos]);
@@ -42,14 +56,36 @@ const Todos = () => {
     }
   };
 
+  const handleAddMood = (log) => {
+    setMoods(prev => [...prev, log]);
+  };
+
   useEffect(() => {
     fetchTodos();
+    fetchMoods();
   }, []);
 
+  const getMoodColor = (mood) => {
+    switch (mood) {
+      case '😄': return '#fff9c4';
+      case '🙂': return '#d0f0c0';
+      case '😐': return '#f0f0f0';
+      case '😢': return '#bbdefb';
+      case '😡': return '#ffcdd2';
+      default: return 'white';
+    }
+  };
+
   return (
-    <div style={{ maxWidth: 600, margin: 'auto', padding: 20 }}>
-      <h2>📝 나의 할 일</h2>
-      <TodoForm onAdd={handleAdd} />
+    <div style={{
+      maxWidth: 600,
+      margin: 'auto',
+      padding: 20,
+      backgroundColor: getMoodColor(latestMood),
+      transition: 'background-color 0.5s'
+    }}>
+      <h2>📝 오늘의 할 일</h2>
+      <TodoForm onAdd={handleAddTodo} />
       <ul style={{ listStyle: 'none', padding: 0 }}>
         {todos.map(todo => (
           <TodoItem
@@ -60,6 +96,13 @@ const Todos = () => {
           />
         ))}
       </ul>
+
+      <hr style={{ margin: '30px 0' }} />
+
+      <h2>😊 오늘의 감정</h2>
+      <MoodForm onAdd={handleAddMood} existingLogs={moods} />
+
+      <MoodChart logs={moods} />
     </div>
   );
 };

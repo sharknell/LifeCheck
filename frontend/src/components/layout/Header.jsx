@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import API from '../../services/api';
 import { AuthContext } from '../../context/AuthContext';
+import { toast } from 'react-toastify';
+
 
 const Header = () => {
   const { isAuthenticated, logout } = useContext(AuthContext);
@@ -24,6 +26,25 @@ const Header = () => {
   const handleLogout = () => {
     logout();
     navigate('/account');
+  toast.success('🎉 로그아웃 하였습니다! 다시 방문해주세요 😊', {
+         position: "top-center",
+         autoClose: 2500,
+         hideProgressBar: false,
+         closeOnClick: true,
+         pauseOnHover: true,
+         draggable: true,
+         progress: undefined,
+         theme: "light",
+         style: {
+           fontSize: '16px',
+           fontWeight: 'bold',
+           color: '#2e7d32',
+           backgroundColor: '#e8f5e9',
+           border: '1px solid #81c784',
+           borderRadius: '12px',
+           padding: '12px 20px',
+         }
+       });
   };
 
   if (!isAuthenticated) return null;

@@ -5,6 +5,13 @@ const initDatabase = require('../backend/src/config/initDatabase'); // ← 이�
 const sequelize = require('../backend/src/config/database');
 const User = require("./src/models/User");
 const authRoutes = require("./src/routes/authRoutes");
+
+const Todo = require("./src/models/Todo");
+const todoRoutes = require("./src/routes/todoRoutes");
+
+const MoodLog = require('./src/models/MoodLog');
+const moodRoutes= require('./src/routes/moodRoutes');
+
 const cors = require('cors');
 const app = express();
 const PORT = 5000;
@@ -33,5 +40,7 @@ const startServer = async () => {
     console.error('❌ 서버 시작 중 오류:', err);
   }
 };
+app.use('/api/todos', todoRoutes);
+app.use('/api/moods', moodRoutes);
 
 startServer();

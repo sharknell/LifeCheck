@@ -7,6 +7,7 @@ import AuthProvider from './context/AuthContext';
 import { ToastContainer } from 'react-toastify';
 import Header from './components/layout/Header';
 import Todos from './pages/Todos';
+import Mood from "./pages/Mood";
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
 
         <Routes>
         <Route path="/todos" element={<PrivateRoute><Todos /></PrivateRoute>} />
+        <Route path="/mood" element={<PrivateRoute><Mood /></PrivateRoute>} />
+
           <Route path="/account" element={<Account />} />
         <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
         {/* */}
