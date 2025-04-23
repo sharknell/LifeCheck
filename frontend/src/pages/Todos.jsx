@@ -4,12 +4,25 @@ import TodoForm from '../components/todo/TodoForm';
 import TodoItem from '../components/todo/TodoItem';
 import MoodForm from '../components/mood/MoodForm';
 import MoodChart from '../components/mood/MoodChart';
+import MoodHistory from '../components/mood/MoodHistory';
+import MoodWeeklyChart from '../components/mood/MoodWeeklyChart';
+import TodoStats from '../components/todo/TodoStats';
 
 const Todos = () => {
   const [todos, setTodos] = useState([]);
   const [moods, setMoods] = useState([]);
 
   const latestMood = moods[moods.length - 1]?.mood || null;
+
+  const getTodayString = () => {
+    const today = new Date();
+    return today.toLocaleDateString('ko-KR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      weekday: 'short',
+    });
+  };
 
   const fetchTodos = async () => {
     try {
@@ -29,14 +42,15 @@ const Todos = () => {
     }
   };
 
-  const handleAddTodo = async (content) => {
+  const handleAddTodo = async (todoData) => {
     try {
-      const res = await API.post('/todos', { content });
+      const res = await API.post('/todos', todoData); // 객체 전달
       setTodos([res.data, ...todos]);
     } catch (err) {
       console.error('❌ 추가 실패', err);
     }
   };
+  
 
   const handleToggle = async (id) => {
     try {
@@ -84,6 +98,7 @@ const Todos = () => {
       backgroundColor: getMoodColor(latestMood),
       transition: 'background-color 0.5s'
     }}>
+      <h2>🗓️ {getTodayString()}</h2>
       <h2>📝 오늘의 할 일</h2>
       <TodoForm onAdd={handleAddTodo} />
       <ul style={{ listStyle: 'none', padding: 0 }}>
@@ -102,7 +117,18 @@ const Todos = () => {
       <h2>😊 오늘의 감정</h2>
       <MoodForm onAdd={handleAddMood} existingLogs={moods} />
 
+      <h2>📊 감정 차트</h2>
       <MoodChart logs={moods} />
+
+      <h2>📜 그동안 감정 기록</h2>
+      <MoodHistory logs={moods} />
+
+
+      <MoodWeeklyChart logs={moods} />
+
+
+      <TodoStats todos={todos} />
+
     </div>
   );
 };
