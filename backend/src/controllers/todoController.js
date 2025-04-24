@@ -33,3 +33,21 @@ exports.deleteTodo = async (req, res) => {
   await todo.destroy();
   res.json({ message: '삭제 완료' });
 };
+// 예시: todoController.js
+exports.updateTodo = async (req, res) => {
+  const { id } = req.params;
+  const { content } = req.body;
+
+  try {
+    const todo = await Todo.findByPk(id);
+    if (!todo) return res.status(404).json({ message: '투두 없음' });
+
+    todo.content = content;
+    await todo.save();
+
+    res.json(todo);
+  } catch (err) {
+    res.status(500).json({ message: '수정 실패' });
+  }
+};
+

@@ -3,12 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import API from '../../services/api';
 import { AuthContext } from '../../context/AuthContext';
 import { toast } from 'react-toastify';
-
+import { useTheme } from '../../context/ThemeContext';
 
 const Header = () => {
   const { isAuthenticated, logout } = useContext(AuthContext);
   const [user, setUser] = useState(null);
   const [error, setError] = useState('');
+  const { isDark, toggleTheme} = useTheme();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -63,6 +64,9 @@ const Header = () => {
         )}
         <button onClick={handleLogout}>로그아웃</button>
       </div>
+      <button onClick={toggleTheme}>
+        {isDark ? '☀️ Light' : '🌙 Dark'}
+      </button>
     </header>
   );
 };

@@ -4,6 +4,7 @@ const TodoForm = ({ onAdd }) => {
   const [content, setContent] = useState('');
   const [priority, setPriority] = useState('보통');
   const [dueDate, setDueDate] = useState('');
+  const [category, setCategory] = useState('일반');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,6 +38,14 @@ const TodoForm = ({ onAdd }) => {
           <option value="보통">🟡 보통</option>
           <option value="낮음">🟢 낮음</option>
         </select>
+
+        <select value={category} onChange={e => setCategory(e.target.value)}>
+  <option value="일반">📌 일반</option>
+  <option value="공부">📘 공부</option>
+  <option value="운동">🏋️ 운동</option>
+  <option value="업무">💼 업무</option>
+  <option value="취미">🎨 취미</option>
+</select>
 
         <input
           type="date"

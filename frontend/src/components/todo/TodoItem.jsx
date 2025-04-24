@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import API from '../../services/api';
 
 const formatTime = (dateString) => {
   const date = new Date(dateString);
@@ -8,7 +9,16 @@ const formatTime = (dateString) => {
   });
 };
 
-const TodoItem = ({ todo, onToggle, onDelete }) => {
+const getPriorityColor = (priority) => {
+  switch (priority) {
+    case '높음': return '#ef9a9a';
+    case '보통': return '#fff59d';
+    case '낮음': return '#a5d6a7';
+    default: return '#e0e0e0';
+  }
+};
+
+const TodoItem = ({ todo, onToggle, onDelete, onUpdate }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState(todo.content);
 
@@ -20,26 +30,18 @@ const TodoItem = ({ todo, onToggle, onDelete }) => {
     setEditValue(e.target.value);
   };
 
-  const handleEditSubmit = (e) => {
-    if (e.key === 'Enter') {
-      // 실제 업데이트 기능은 백엔드 연동 필요 (현재는 표시만)
-      todo.content = editValue;
-      setIsEditing(false);
+  const handleEditSubmit = async (e) => {
+    if (e.key === 'Enter' && editValue.trim()) {
+      try {
+        const res = await API.patch(`/todos/${todo.id}`, { content: editValue });
+        onUpdate(res.data); // 부모에게 업데이트 전달
+        setIsEditing(false);
+      } catch (err) {
+        console.error('❌ 수정 실패', err);
+      }
     }
   };
 
-  // 추가 함수
-const getPriorityColor = (priority) => {
-  switch (priority) {
-    case '높음': return '#ef9a9a';
-    case '보통': return '#fff59d';
-    case '낮음': return '#a5d6a7';
-    default: return '#e0e0e0';
-  }
-};
-
-
-  
   return (
     <li style={{
       display: 'flex',
@@ -68,28 +70,37 @@ const getPriorityColor = (priority) => {
               cursor: 'pointer'
             }}
           >
-            <span
-  style={{
-    backgroundColor: getPriorityColor(todo.priority),
-    borderRadius: 4,
-    padding: '2px 6px',
-    fontSize: 12,
-    marginLeft: 8
-  }}
->
-  {todo.priority}
-</span>
-
-{todo.dueDate && (
-  <small style={{ fontSize: 12, color: '#555', marginLeft: 10 }}>
-    ⏰ {todo.dueDate}
-  </small>
-)}
-
             {todo.content}
           </span>
         )}
+        <span
+          style={{
+            backgroundColor: getPriorityColor(todo.priority),
+            borderRadius: 4,
+            padding: '2px 6px',
+            fontSize: 12,
+            marginLeft: 8
+          }}
+        >
+          {todo.priority}
+        </span>
+        <span style={{
+  backgroundColor: '#ddd',
+  borderRadius: '6px',
+  padding: '2px 8px',
+  fontSize: 12,
+  marginLeft: 10
+}}>
+  {todo.category}
+</span>
+
+        {todo.dueDate && (
+          <small style={{ fontSize: 12, color: '#555', marginLeft: 10 }}>
+            ⏰ {todo.dueDate}
+          </small>
+        )}
       </div>
+
       <small style={{ marginLeft: 10, fontSize: 12, color: '#999' }}>
         {formatTime(todo.createdAt)}
       </small>

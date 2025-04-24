@@ -4,6 +4,7 @@ import Account from './pages/Account';
 import Dashboard from './pages/Dashboard';
 import PrivateRoute from './routes/PrivateRoute';
 import AuthProvider from './context/AuthContext';
+import ThemeProvider from './context/ThemeContext';
 import { ToastContainer } from 'react-toastify';
 import Header from './components/layout/Header';
 import Todos from './pages/Todos';
@@ -11,6 +12,7 @@ import Mood from "./pages/Mood";
 
 function App() {
   return (
+    <ThemeProvider>
     <AuthProvider>
       <Router>
       <Header />
@@ -26,6 +28,7 @@ function App() {
         <ToastContainer />
       </Router>
     </AuthProvider>
+    </ThemeProvider>
   );
 }
 

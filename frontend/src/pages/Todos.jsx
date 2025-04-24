@@ -7,10 +7,12 @@ import MoodChart from '../components/mood/MoodChart';
 import MoodHistory from '../components/mood/MoodHistory';
 import MoodWeeklyChart from '../components/mood/MoodWeeklyChart';
 import TodoStats from '../components/todo/TodoStats';
+import CalendarView from '../components/CalendarView'; // 📅 캘린더 뷰 추가
 
 const Todos = () => {
   const [todos, setTodos] = useState([]);
   const [moods, setMoods] = useState([]);
+  const [filter, setFilter] = useState('전체');
 
   const latestMood = moods[moods.length - 1]?.mood || null;
 
@@ -23,6 +25,13 @@ const Todos = () => {
       weekday: 'short',
     });
   };
+
+  const todayDate = new Date().toISOString().slice(0, 10);
+  const todayTodos = todos.filter(todo => todo.createdAt?.slice(0, 10) === todayDate);
+
+  const filteredTodos = todayTodos.filter(todo =>
+    filter === '전체' ? true : todo.category === filter
+  );
 
   const fetchTodos = async () => {
     try {
@@ -44,13 +53,12 @@ const Todos = () => {
 
   const handleAddTodo = async (todoData) => {
     try {
-      const res = await API.post('/todos', todoData); // 객체 전달
+      const res = await API.post('/todos', todoData);
       setTodos([res.data, ...todos]);
     } catch (err) {
       console.error('❌ 추가 실패', err);
     }
   };
-  
 
   const handleToggle = async (id) => {
     try {
@@ -68,6 +76,10 @@ const Todos = () => {
     } catch (err) {
       console.error('❌ 삭제 실패', err);
     }
+  };
+
+  const handleUpdate = (updated) => {
+    setTodos(todos.map(todo => todo.id === updated.id ? updated : todo));
   };
 
   const handleAddMood = (log) => {
@@ -99,18 +111,34 @@ const Todos = () => {
       transition: 'background-color 0.5s'
     }}>
       <h2>🗓️ {getTodayString()}</h2>
+
       <h2>📝 오늘의 할 일</h2>
       <TodoForm onAdd={handleAddTodo} />
+
+      <div style={{ margin: '10px 0' }}>
+        <label>카테고리 필터: </label>
+        <select value={filter} onChange={e => setFilter(e.target.value)}>
+          <option value="전체">전체</option>
+          <option value="공부">공부</option>
+          <option value="운동">운동</option>
+          <option value="업무">업무</option>
+          <option value="취미">취미</option>
+        </select>
+      </div>
+
       <ul style={{ listStyle: 'none', padding: 0 }}>
-        {todos.map(todo => (
+        {filteredTodos.map(todo => (
           <TodoItem
             key={todo.id}
             todo={todo}
             onToggle={() => handleToggle(todo.id)}
             onDelete={() => handleDelete(todo.id)}
+            onUpdate={handleUpdate}
           />
         ))}
       </ul>
+
+      <TodoStats todos={filteredTodos} />
 
       <hr style={{ margin: '30px 0' }} />
 
@@ -119,16 +147,14 @@ const Todos = () => {
 
       <h2>📊 감정 차트</h2>
       <MoodChart logs={moods} />
-
-      <h2>📜 그동안 감정 기록</h2>
-      <MoodHistory logs={moods} />
-
-
       <MoodWeeklyChart logs={moods} />
 
+      <h2>📜 감정 기록</h2>
+      <MoodHistory logs={moods} />
 
-      <TodoStats todos={todos} />
+      <hr style={{ margin: '30px 0' }} />
 
+      <CalendarView moods={moods} todos={todos} />
     </div>
   );
 };

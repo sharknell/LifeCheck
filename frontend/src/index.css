@@ -11,3 +11,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.light {
+  background-color: #fff;
+  color: #111;
+  transition: all 0.3s ease;
+}
+
+.dark {
+  background-color: #121212;
+  color: #eee;
+  transition: all 0.3s ease;
+}
+
+.dark input,
+.dark textarea,
+.dark select,
+.dark button {
+  background-color: #333;
+  color: #eee;
+  border: 1px solid #555;
+}
