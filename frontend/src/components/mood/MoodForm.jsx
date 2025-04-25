@@ -4,9 +4,20 @@ import API from '../../services/api';
 const MoodForm = ({ onAdd, existingLogs = [] }) => {
   const [mood, setMood] = useState('😐');
   const [note, setNote] = useState('');
-  const today = new Date().toISOString().slice(0, 10);
 
-  const alreadyLoggedToday = existingLogs.some(log => log.date === today);
+  const today = new Date();
+  const formatDate = (date) => {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = ('0' + (d.getMonth() + 1)).slice(-2);
+    const day = ('0' + d.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+  };
+  const todayStr = formatDate(today);
+
+  // ✅ KST 기준 날짜로 비교!
+  const alreadyLoggedToday = existingLogs.some(log => formatDate(log.date) === todayStr);
+  const todayLog = existingLogs.find(log => formatDate(log.date) === todayStr);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,7 +27,7 @@ const MoodForm = ({ onAdd, existingLogs = [] }) => {
       const res = await API.post('/moods', {
         mood,
         note,
-        date: today
+        date: todayStr  // ✅ 문자열로 명시적 전달
       });
       onAdd(res.data);
       setNote('');
@@ -24,8 +35,6 @@ const MoodForm = ({ onAdd, existingLogs = [] }) => {
       console.error('감정 저장 실패', err);
     }
   };
-
-  const todayLog = existingLogs.find(log => log.date === today);
 
   return (
     <div>

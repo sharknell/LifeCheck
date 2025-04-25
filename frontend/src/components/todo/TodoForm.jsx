@@ -13,7 +13,8 @@ const TodoForm = ({ onAdd }) => {
     const todoData = {
       content,
       priority,
-      dueDate
+      dueDate,
+      createdAt: new Date().toISOString(), // ✅ 추가
     };
 
     onAdd(todoData); // 객체로 전달!

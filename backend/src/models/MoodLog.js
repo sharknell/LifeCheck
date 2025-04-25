@@ -13,8 +13,11 @@ const MoodLog = sequelize.define('MoodLog', {
   },
   date: {
     type: DataTypes.DATEONLY,
-    allowNull: false
+    allowNull: false,
+    defaultValue: DataTypes.NOW // ✅ 오늘 날짜 기본값 추가
   }
+}, {
+  timestamps: true // createdAt, updatedAt 사용 여부 (기본값 true)
 });
 
 User.hasMany(MoodLog, { foreignKey: 'userId' });

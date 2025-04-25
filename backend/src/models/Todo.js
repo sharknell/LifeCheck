@@ -15,7 +15,10 @@ const Todo = sequelize.define('Todo', {
     type: DataTypes.DATEONLY,
     allowNull: true
   }
+}, {
+  timestamps: true  // ✅ 이 옵션을 추가하면 createdAt이 자동 생성됨
 });
+
 
 User.hasMany(Todo, { foreignKey: 'userId' });
 Todo.belongsTo(User, { foreignKey: 'userId' });

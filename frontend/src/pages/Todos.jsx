@@ -7,14 +7,19 @@ import MoodChart from '../components/mood/MoodChart';
 import MoodHistory from '../components/mood/MoodHistory';
 import MoodWeeklyChart from '../components/mood/MoodWeeklyChart';
 import TodoStats from '../components/todo/TodoStats';
-import CalendarView from '../components/CalendarView'; // 📅 캘린더 뷰 추가
+import CalendarView from '../components/CalendarView';
 
 const Todos = () => {
   const [todos, setTodos] = useState([]);
   const [moods, setMoods] = useState([]);
   const [filter, setFilter] = useState('전체');
 
-  const latestMood = moods[moods.length - 1]?.mood || null;
+  const todayDate = new Date().toISOString().slice(0, 10);
+
+  const todayMoodObj = moods.find(
+    (mood) => new Date(mood.date).toISOString().slice(0, 10) === todayDate
+  );
+  const latestMood = todayMoodObj?.mood || null;
 
   const getTodayString = () => {
     const today = new Date();
@@ -26,9 +31,7 @@ const Todos = () => {
     });
   };
 
-  const todayDate = new Date().toISOString().slice(0, 10);
   const todayTodos = todos.filter(todo => todo.createdAt?.slice(0, 10) === todayDate);
-
   const filteredTodos = todayTodos.filter(todo =>
     filter === '전체' ? true : todo.category === filter
   );
@@ -111,6 +114,12 @@ const Todos = () => {
       transition: 'background-color 0.5s'
     }}>
       <h2>🗓️ {getTodayString()}</h2>
+
+      {latestMood ? (
+        <p>오늘의 감정은 {latestMood}입니다 😊</p>
+      ) : (
+        <p>오늘 감정을 아직 기록하지 않았어요 ❗</p>
+      )}
 
       <h2>📝 오늘의 할 일</h2>
       <TodoForm onAdd={handleAddTodo} />
