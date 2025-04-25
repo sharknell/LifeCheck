@@ -8,7 +8,7 @@ import MoodHistory from '../components/mood/MoodHistory';
 import MoodWeeklyChart from '../components/mood/MoodWeeklyChart';
 import TodoStats from '../components/todo/TodoStats';
 import CalendarView from '../components/CalendarView';
-
+import TodoCompletionMessage from '../components/todo/TodoCompletionMessage';
 const Todos = () => {
   const [todos, setTodos] = useState([]);
   const [moods, setMoods] = useState([]);
@@ -122,6 +122,7 @@ const Todos = () => {
       )}
 
       <h2>📝 오늘의 할 일</h2>
+      <TodoCompletionMessage /> {/* ✅ 여기! */}
       <TodoForm onAdd={handleAddTodo} />
 
       <div style={{ margin: '10px 0' }}>
