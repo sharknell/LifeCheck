@@ -1,28 +1,62 @@
 .account-container {
-    display: flex;
-    justify-content: space-around;
-    padding: 40px;
-    max-width: 800px;
-    margin: auto;
-  }
-  
-  .account-box {
-    width: 45%;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-  }
-  
-  input {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-  }
-  
-  button {
-    margin-top: 15px;
-    padding: 10px;
-    width: 100%;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  padding: 60px 20px;
+  flex-wrap: wrap;
+}
+
+.account-box {
+  background: #ffffff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+  width: 320px;
+}
+
+.account-box h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.account-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.account-form input {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+}
+
+.account-form input:focus {
+  border-color: #4a90e2;
+}
+
+.account-form button {
+  background-color: #4a90e2;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.account-form button:hover {
+  background-color: #357abd;
+}
+
+.account-message {
+  color: #d32f2f;
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}

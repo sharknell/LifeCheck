@@ -1,0 +1,74 @@
+.header {
+  background: #f9fafb;
+  border-bottom: 1px solid #e3e6ea;
+  padding: 18px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Pretendard", "Noto Sans KR", sans-serif;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-link {
+  font-size: 16px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.nav-link:hover {
+  color: #4a90e2;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 12px;
+}
+
+.user-info {
+  white-space: nowrap; /* ✅ 줄바꿈 금지 */
+  font-weight: 600;
+  color: #555;
+  font-size: 15px;
+}
+
+.btn {
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  white-space: nowrap; /* ✅ 버튼 안 줄바꿈 금지 */
+  display: flex; /* ✅ 가로 정렬 */
+  align-items: center;
+  gap: 8px; /* ✅ 이모지랑 글자 사이 간격 */
+}
+
+.btn.primary {
+  background-color: #4a90e2;
+  color: white;
+}
+
+.btn.primary:hover {
+  background-color: #357abd;
+}
+
+.btn.secondary {
+  background-color: transparent;
+  color: #4a90e2;
+  border: 1px solid #4a90e2;
+}
+
+.btn.secondary:hover {
+  background-color: #e0f0ff;
+}
