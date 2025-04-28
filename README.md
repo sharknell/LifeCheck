@@ -21,10 +21,7 @@ Frontend
 📦src
  ┣ 📂components
  ┃ ┣ 📂auth
- ┃ ┃ ┣ 📜LoginForm.jsx
- ┃ ┃ ┗ 📜RegisterForm.jsx
  ┃ ┣ 📂layout
- ┃ ┃ ┗ 📜Header.jsx
  ┃ ┣ 📂mood
  ┃ ┃ ┣ 📜MoodChart.jsx
  ┃ ┃ ┣ 📜MoodForm.jsx
@@ -37,29 +34,12 @@ Frontend
  ┃ ┃ ┗ 📜TodoStats.jsx
  ┃ ┗ 📜CalendarView.jsx
  ┣ 📂context
- ┃ ┣ 📜AuthContext.jsx
- ┃ ┗ 📜ThemeContext.jsx
  ┣ 📂pages
- ┃ ┣ 📜Account.jsx
- ┃ ┣ 📜Dashboard.jsx
  ┃ ┣ 📜Mood.jsx
  ┃ ┣ 📜Todos.jsx
- ┃ ┗ 📜Welcome.jsx
  ┣ 📂routes
- ┃ ┗ 📜PrivateRoute.jsx
  ┣ 📂services
- ┃ ┗ 📜api.js
  ┣ 📂styles
- ┃ ┣ 📜Account.css
- ┃ ┣ 📜CalendarView.css
- ┃ ┣ 📜Dashboard.css
- ┃ ┣ 📜Header.css
- ┃ ┣ 📜LoginForm.css
- ┃ ┣ 📜MoodHistory.css
- ┃ ┣ 📜MoodWeeklyChart.css
- ┃ ┣ 📜TodoForm.css
- ┃ ┣ 📜TodoItem.css
- ┃ ┗ 📜Welcome.css
  ┣ 📜App.css
  ┣ 📜App.js
  ┣ 📜App.test.js
@@ -74,23 +54,10 @@ Frontend
 backend
 📦src
  ┣ 📂config
- ┃ ┣ 📜database.js
- ┃ ┗ 📜initDatabase.js
  ┣ 📂controllers
- ┃ ┣ 📜authController.js
- ┃ ┣ 📜moodController.js
- ┃ ┗ 📜todoController.js
  ┣ 📂middleware
- ┃ ┗ 📜authMiddleware.js
  ┣ 📂models
- ┃ ┣ 📜Mood.js
- ┃ ┣ 📜MoodLog.js
- ┃ ┣ 📜Todo.js
- ┃ ┗ 📜User.js
  ┗ 📂routes
- ┃ ┣ 📜authRoutes.js
- ┃ ┣ 📜moodRoutes.js
- ┃ ┗ 📜todoRoutes.js
 ```
 
 ## 페이지 구조
@@ -100,22 +67,3 @@ backend
 - `/todos` : **할 일 관리 페이지** /  **감정 기록 페이지**  - 사용자가 할 일을 추가, 수정, 삭제할 수 있으며 하루의 감정을 기록하고 분석할 수 있는 페이지입니다. 또한 기록을 볼 수 있습니다.
 
 
-- `/` : 메인 페이지 ( / ) 
-<br />
-
-![Image](https://github.com/user-attachments/assets/6e3ea588-e72e-4659-9dcb-af7042bd1206)
-  
--  `/account` : 로그인 페이지 (/account )
-<br />
-
-![Image](https://github.com/user-attachments/assets/74e875ed-0296-4f59-8ccb-0e60220720b4)
-
--  `/dashboard` : 로그인 페이지 (/account )
-<br />
-
-![Image](https://github.com/user-attachments/assets/46e377f5-91eb-47c5-99da-8c574b48e021)
-
--  `/todos` : 로그인 페이지 (/account )
-<br />
-
-![Image](https://github.com/user-attachments/assets/1f14ccdc-8f6c-4bd7-8dfa-84c82ed2b7e0)
