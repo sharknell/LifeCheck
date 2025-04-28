@@ -32,8 +32,6 @@ const Header = () => {
     });
   };
 
-  if (!isAuthenticated) return null;
-
   return (
     <header className="header">
       <div className="nav-left">
@@ -45,15 +43,25 @@ const Header = () => {
         </Link>
       </div>
       <div className="nav-right">
-        {user && (
-          <span className="user-info">👋 {user.nickname || user.email}</span>
+        {isAuthenticated ? (
+          <>
+            {user && (
+              <span className="user-info">
+                👋 {user.nickname || user.email}
+              </span>
+            )}
+            <button className="btn secondary" onClick={toggleTheme}>
+              {isDark ? "☀️ Light" : "🌙 Dark"}
+            </button>
+            <button className="btn primary" onClick={handleLogout}>
+              로그아웃
+            </button>
+          </>
+        ) : (
+          <Link to="/account" className="btn primary">
+            로그인 / 회원가입
+          </Link>
         )}
-        <button className="btn secondary" onClick={toggleTheme}>
-          {isDark ? "☀️ Light" : "🌙 Dark"}
-        </button>
-        <button className="btn primary" onClick={handleLogout}>
-          로그아웃
-        </button>
       </div>
     </header>
   );
