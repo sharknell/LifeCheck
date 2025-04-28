@@ -15,7 +15,7 @@
 - **Authentication**: JWT (JSON Web Token)
 
 
-## 프로젝트 구조 
+## 프로젝트 폴더 구조 
 ```
 Frontend
 📦src
