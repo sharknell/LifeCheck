@@ -1,20 +1,25 @@
-import React, { useState } from 'react';
-import API from '../../services/api';
+import React, { useState } from "react";
+import API from "../../services/api";
+import "../../styles/TodoItem.css"; // ✅ 스타일 추가
 
 const formatTime = (dateString) => {
   const date = new Date(dateString);
-  return date.toLocaleTimeString('ko-KR', {
-    hour: '2-digit',
-    minute: '2-digit',
+  return date.toLocaleTimeString("ko-KR", {
+    hour: "2-digit",
+    minute: "2-digit",
   });
 };
 
 const getPriorityColor = (priority) => {
   switch (priority) {
-    case '높음': return '#ef9a9a';
-    case '보통': return '#fff59d';
-    case '낮음': return '#a5d6a7';
-    default: return '#e0e0e0';
+    case "높음":
+      return "#ef9a9a";
+    case "보통":
+      return "#fff59d";
+    case "낮음":
+      return "#a5d6a7";
+    default:
+      return "#e0e0e0";
   }
 };
 
@@ -31,80 +36,60 @@ const TodoItem = ({ todo, onToggle, onDelete, onUpdate }) => {
   };
 
   const handleEditSubmit = async (e) => {
-    if (e.key === 'Enter' && editValue.trim()) {
+    if (e.key === "Enter" && editValue.trim()) {
       try {
-        const res = await API.patch(`/todos/${todo.id}`, { content: editValue });
-        onUpdate(res.data); // 부모에게 업데이트 전달
+        const res = await API.patch(`/todos/${todo.id}`, {
+          content: editValue,
+        });
+        onUpdate(res.data);
         setIsEditing(false);
       } catch (err) {
-        console.error('❌ 수정 실패', err);
+        console.error("❌ 수정 실패", err);
       }
     }
   };
 
   return (
-    <li style={{
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      padding: 8,
-      backgroundColor: '#f9f9f9',
-      borderBottom: '1px solid #eee'
-    }}>
-      <div onDoubleClick={handleDoubleClick} style={{ flex: 1 }}>
+    <li className="todo-item">
+      <div onDoubleClick={handleDoubleClick} className="todo-item-content">
         {isEditing ? (
           <input
+            className="todo-edit-input"
             value={editValue}
             onChange={handleEditChange}
             onKeyDown={handleEditSubmit}
             autoFocus
-            style={{ width: '100%', padding: 5 }}
           />
         ) : (
           <span
             onClick={onToggle}
-            style={{
-              textDecoration: todo.isDone ? 'line-through' : 'none',
-              color: todo.isDone ? '#aaa' : '#333',
-              fontWeight: 'bold',
-              cursor: 'pointer'
-            }}
+            className={`todo-text ${todo.isDone ? "done" : ""}`}
           >
             {todo.content}
           </span>
         )}
+
         <span
-          style={{
-            backgroundColor: getPriorityColor(todo.priority),
-            borderRadius: 4,
-            padding: '2px 6px',
-            fontSize: 12,
-            marginLeft: 8
-          }}
+          className="todo-priority"
+          style={{ backgroundColor: getPriorityColor(todo.priority) }}
         >
           {todo.priority}
         </span>
-        <span style={{
-  backgroundColor: '#ddd',
-  borderRadius: '6px',
-  padding: '2px 8px',
-  fontSize: 12,
-  marginLeft: 10
-}}>
-  {todo.category}
-</span>
+        <span className="todo-category">{todo.category}</span>
 
         {todo.dueDate && (
-          <small style={{ fontSize: 12, color: '#555', marginLeft: 10 }}>
-            ⏰ {todo.dueDate}
-          </small>
+          <small className="todo-due-date">⏰ {todo.dueDate}</small>
         )}
       </div>
 
-      <small style={{ marginLeft: 10, fontSize: 12, color: '#999' }}>
-        {formatTime(todo.createdAt)}
-      </small>
-      <button onClick={onDelete} style={{ marginLeft: 10 }}>삭제</button>
+      <div className="todo-item-right">
+        <small className="todo-created-time">
+          {formatTime(todo.createdAt)}
+        </small>
+        <button className="todo-delete-btn" onClick={onDelete}>
+          삭제
+        </button>
+      </div>
     </li>
   );
 };
