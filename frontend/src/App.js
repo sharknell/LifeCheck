@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify";
 import Header from "./components/layout/Header";
 import Todos from "./pages/Todos";
 import Mood from "./pages/Mood";
+import Welcome from "./pages/Welcome";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Header />
 
           <Routes>
+            <Route path="/" element={<Welcome />} />
             <Route
               path="/todos"
               element={
@@ -44,7 +46,6 @@ function App() {
                 </PrivateRoute>
               }
             />
-            {/* */}
           </Routes>
           <ToastContainer />
         </Router>

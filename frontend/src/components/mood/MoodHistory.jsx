@@ -1,6 +1,5 @@
 import React from "react";
-import "../../styles/MoodHistory.css"; // ✅ 스타일 추가
-
+import "../../styles/MoodHistory.css";
 const MoodHistory = ({ logs }) => {
   const sorted = [...logs].sort((a, b) => b.date.localeCompare(a.date));
 
