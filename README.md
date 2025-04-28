@@ -100,14 +100,22 @@ backend
 - `/todos` : **할 일 관리 페이지** /  **감정 기록 페이지**  - 사용자가 할 일을 추가, 수정, 삭제할 수 있으며 하루의 감정을 기록하고 분석할 수 있는 페이지입니다. 또한 기록을 볼 수 있습니다.
 
 
-메인 페이지 (/ )
+- `/` : 메인 페이지 ( / ) 
+<br />
+
 ![Image](https://github.com/user-attachments/assets/6e3ea588-e72e-4659-9dcb-af7042bd1206)
   
-로그인 페이지 (/account )
+-  `/account` : 로그인 페이지 (/account )
+<br />
+
 ![Image](https://github.com/user-attachments/assets/74e875ed-0296-4f59-8ccb-0e60220720b4)
 
-대쉬보드 페이지 (/dashboard)
+-  `/dashboard` : 로그인 페이지 (/account )
+<br />
+
 ![Image](https://github.com/user-attachments/assets/46e377f5-91eb-47c5-99da-8c574b48e021)
 
-토도 페이지 ( /todos )
+-  `/todos` : 로그인 페이지 (/account )
+<br />
+
 ![Image](https://github.com/user-attachments/assets/1f14ccdc-8f6c-4bd7-8dfa-84c82ed2b7e0)
